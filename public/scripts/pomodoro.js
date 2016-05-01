@@ -96,7 +96,7 @@ var Main = React.createClass({
     },
     getInitialState: function () {
         var timeLeftString = '25:00';
-        return {countdown:timeLeftString, startstoplabel:'Start'};
+        return {countdown:timeLeftString, startstoplabel:'Go'};
     },
     startStopClick: function () {
         if(isRunning === 'true'){
