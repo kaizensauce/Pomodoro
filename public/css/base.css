@@ -1,5 +1,5 @@
 body {
-  background: #fff;
+  background: #000;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.7;
@@ -24,6 +24,18 @@ code {
   font-size: 12px;
   margin: 0 2px;
   padding: 0 5px;
+}
+
+.pomodoro{
+  width:100%;
+}
+
+.countdown{
+ margin:0 auto;
+  left: 50%;
+  color: #fff;
+  font-size:150px;  
+  width:100%;
 }
 
 h1, h2, h3, h4 {

@@ -35,7 +35,7 @@ var EndTime = React.createClass({
 
 var TimeLeft = React.createClass({
     render: function () {
-        return(<div>{this.props.timeLeft}</div>)
+        return(<div className="countdown"><span className="digits">{this.props.timeLeft}</span></div>)
     }
 })
 
@@ -115,10 +115,10 @@ var Main = React.createClass({
     },
     render: function () {
         return (
-            <div>
-                <StartStopButton startStopClick={this.startStopClick} label={this.state.startstoplabel}/>
-                <ResetButton resetClick={this.resetClick}/>
+            <div className="pomodoro">
                 <TimeLeft timeLeft={this.state.countdown}/>
+                <div><StartStopButton startStopClick={this.startStopClick} label={this.state.startstoplabel}/>
+                <ResetButton resetClick={this.resetClick}/></div>
             </div>
         )
     }

@@ -1,8 +1,8 @@
 {
-  "name": "react-tutorial",
+  "name": "pomodoro",
   "version": "0.0.0",
-  "description": "Code from the React tutorial.",
-  "main": "server.js",
+  "description": "Simple Pomodoro app.",
+  "main": "index.js",
   "dependencies": {
     "body-parser": "^1.4.3",
     "express": "^4.4.5"
@@ -10,11 +10,11 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/reactjs/react-tutorial.git"
+    "url": "https://github.com/kaizensauce/Pomodoro"
   },
   "keywords": [
     "react",
@@ -22,11 +22,11 @@
     "comment",
     "example"
   ],
-  "author": "petehunt",
+  "author": "nicholasbonner",
   "bugs": {
-    "url": "https://github.com/reactjs/react-tutorial/issues"
+    "url": "https://github.com/kaizensauce/Pomodoro/issues"
   },
-  "homepage": "https://github.com/reactjs/react-tutorial",
+  "homepage": "https://github.com/kaizensauce/Pomodoro",
   "engines" : {
     "node" : "0.12.x"
   }
