@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
-var moment = require('moment');
 var app = express();
 
 var COMMENTS_FILE = path.join(__dirname, 'comments.json');
