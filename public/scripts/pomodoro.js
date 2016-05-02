@@ -10,123 +10,113 @@ var StartStopButton = React.createClass({
 })
 
 var ResetButton = React.createClass({
-    render:function() {
-        return ( 
+    render: function () {
+        return (
             <button onClick={this.props.resetClick}>Reset</button>
         )
     }
 })
 
-var NowTime = React.createClass({
+var Time = React.createClass({
     render: function () {
         return (
-            <div>Start Time: {this.props.nowTime}</div>
+            <div className="countdown">{this.props.currentTime}</div>
         )
     }
 })
 
-var EndTime = React.createClass({
+var Date = React.createClass({
     render: function () {
         return (
-            <div>End Time: {this.props.endTime}</div>
+            <div className="date">{this.props.currentDate}</div>
         )
     }
 })
+
 
 var TimeLeft = React.createClass({
     render: function () {
-        return(<div className="countdown"><span className="digits">{this.props.timeLeft}</span></div>)
+        return (<div className="countdown"><span className="digits">{this.props.timeLeft}</span></div>)
     }
 })
 
-var utilities = {
-    calculateEndTime: function()
-    {
-        var endTime = new moment().add(5, 'seconds');    
-        return endTime;
-    },
-    getRemainingDuration: function (endTime, nowTime){
-         return moment.duration(endTime.diff(nowTime, 'seconds'),'seconds');
-    },
-    createTimeLeftString(duration)
-    {
-        if(duration.asMilliseconds() < 500)
-        {
-            return "Time's Up!"
-        }
-        var seconds = duration.seconds();
-        var padding = '';
-        if (seconds < 10)
-        {
-            padding = '0';
-        }
-        
-        return duration.minutes() + ':' + padding + seconds;
-    }
-}
 var remainingDuration = undefined;
 var isRunning = 'false';
 var timer = undefined;
 
 var Main = React.createClass({
-    startTime:'????',
-    endTime:'????',
-    componentWillMount:function(){
+    componentWillMount: function () {
         remainingDuration = new moment.duration(25, 'minutes');
         globalVar.callback = () => {
             this.tick();
-        }  
-    },
-    tick:function(){
-        if(remainingDuration < 0)
-        {
-            var audio = new Audio('glass_ping.mp3');
-            audio.play();
-            isRunning = 'false';
-            this.setState({startstoplabel:'Start'});
-            clearInterval(timer);
         }
-        remainingDuration.subtract(500);
         this.update();
     },
-    update: function()
-    {
-      var timeLeftString = utilities.createTimeLeftString(remainingDuration);
-      this.setState({countdown:timeLeftString});  
+    
+    tick: function () {
+        if (isRunning === 'true') {
+            remainingDuration.subtract(500);
+            if (remainingDuration < 0) {
+                var audio = new Audio('glass_ping.mp3');
+                audio.play();
+                isRunning = 'false';
+                this.setState({ startstoplabel: 'Start' });
+                clearInterval(timer);
+            }
+        }
+        this.update();
+    },
+    
+    update: function () {
+        var timeLeftString = Utilities.CreateTimeLeftString(remainingDuration);
+        var now = moment();
+        var currentTime = now.format('hh:mm:ss');
+        var currentDate = now.format('dddd Do MMMM YYYY')
+        this.setState({ countdown: timeLeftString, currentTime:currentTime, currentDate:currentDate});
     },
     getInitialState: function () {
         var timeLeftString = '25:00';
-        return {countdown:timeLeftString, startstoplabel:'Go'};
+        var now = moment();
+        var currentTime = now.format('hh:mm:ss');
+        return { countdown: timeLeftString, startstoplabel: 'Go', currentTime: currentTime };
     },
     startStopClick: function () {
-        if(isRunning === 'true'){
+        if (isRunning === 'true') {
             isRunning = 'false';
-            this.setState({startstoplabel:'Start'});
-            clearInterval(timer);
-        }else{
+            this.setState({ startstoplabel: 'Go' });
+        } else {
             isRunning = 'true';
-            this.setState({startstoplabel:'Stop'});
-            timer = setInterval(globalVar.callback, 500);
+            this.setState({ startstoplabel: 'Stop' });
         }
-            },
+    },
     resetClick: function () {
         remainingDuration = new moment.duration(25, 'minutes');
         this.update();
     },
     render: function () {
         return (
+            <div>
             <div className="pomodoro">
                 <TimeLeft timeLeft={this.state.countdown}/>
-                <div><StartStopButton startStopClick={this.startStopClick} label={this.state.startstoplabel}/>
-                <ResetButton resetClick={this.resetClick}/></div>
+                <div>
+                    <StartStopButton startStopClick={this.startStopClick} label={this.state.startstoplabel}/>
+                    <ResetButton resetClick={this.resetClick}/>
+                </div>
             </div>
+            <div>
+               <Time currentTime={this.state.currentTime}></Time>
+               <Date currentDate={this.state.currentDate}></Date>
+            </div>
+            </div>  
         )
     }
 })
 
 
- 
+
 
 ReactDOM.render(<Main />, document.getElementById("content"));
-
+        if (timer === undefined) {
+            timer = setInterval(globalVar.callback, 500);
+        }
 
