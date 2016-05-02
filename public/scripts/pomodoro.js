@@ -4,15 +4,23 @@ var globalVar = {};
 var StartStopButton = React.createClass({
     render: function () {
         return (
-            <button onClick={this.props.startStopClick}>{this.props.label}</button>
+            <div><button onClick={this.props.startStopClick} className={this.props.state}></button></div>
         )
     }
 })
 
-var ResetButton = React.createClass({
+var Reset25Button = React.createClass({
     render: function () {
         return (
-            <button onClick={this.props.resetClick}>Reset</button>
+            <button className="reset" onClick={this.props.resetClick}>25</button>
+        )
+    }
+})
+
+var Reset3Button = React.createClass({
+    render: function () {
+        return (
+            <button className="reset" onClick={this.props.resetClick}>3</button>
         )
     }
 })
@@ -20,7 +28,7 @@ var ResetButton = React.createClass({
 var Time = React.createClass({
     render: function () {
         return (
-            <div className="countdown">{this.props.currentTime}</div>
+            <div className="time">{this.props.currentTime}</div>
         )
     }
 })
@@ -60,7 +68,7 @@ var Main = React.createClass({
                 var audio = new Audio('glass_ping.mp3');
                 audio.play();
                 isRunning = 'false';
-                this.setState({ startstoplabel: 'Start' });
+                this.setState({ state: 'stopped' });
                 clearInterval(timer);
             }
         }
@@ -78,18 +86,22 @@ var Main = React.createClass({
         var timeLeftString = '25:00';
         var now = moment();
         var currentTime = now.format('hh:mm:ss');
-        return { countdown: timeLeftString, startstoplabel: 'Go', currentTime: currentTime };
+        return { countdown: timeLeftString, state: 'stopped', currentTime: currentTime };
     },
     startStopClick: function () {
         if (isRunning === 'true') {
             isRunning = 'false';
-            this.setState({ startstoplabel: 'Go' });
+            this.setState({ state: 'stopped' });
         } else {
             isRunning = 'true';
-            this.setState({ startstoplabel: 'Stop' });
+            this.setState({ state: 'running' });
         }
     },
-    resetClick: function () {
+    reset3Click: function () {
+        remainingDuration = new moment.duration(3, 'minutes');
+        this.update();
+    },
+        reset25Click: function () {
         remainingDuration = new moment.duration(25, 'minutes');
         this.update();
     },
@@ -97,13 +109,14 @@ var Main = React.createClass({
         return (
             <div>
             <div className="pomodoro">
-                <TimeLeft timeLeft={this.state.countdown}/>
-                <div>
-                    <StartStopButton startStopClick={this.startStopClick} label={this.state.startstoplabel}/>
-                    <ResetButton resetClick={this.resetClick}/>
+            <div className='buttons'>
+                    <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
+                    <Reset25Button resetClick={this.reset25Click}/>
+                    <Reset3Button resetClick={this.reset3Click}/>
                 </div>
+                <TimeLeft timeLeft={this.state.countdown}/>
             </div>
-            <div>
+            <div className="time-panel">
                <Time currentTime={this.state.currentTime}></Time>
                <Date currentDate={this.state.currentDate}></Date>
             </div>

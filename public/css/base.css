@@ -1,11 +1,27 @@
+html{
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+}
+
+
 body {
-  background: #000;
+  background: #111;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.7;
   margin: 0;
   padding: 30px;
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+/* Rules below not implemented in browsers yet */
+-o-user-select: none;
+  
 }
+
+button:focus {outline:0;}
 
 a {
   color: #4183c4;
@@ -26,16 +42,54 @@ code {
   padding: 0 5px;
 }
 
+button{
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+/* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  border: none;
+  height:50px;
+  width:50px;
+}
+.buttons{
+  display: inline-block;
+}
+
+button.running{
+background:url(../media/stop.png) no-repeat;
+}
+
+button.stopped{
+background:url(../media/Go.png) no-repeat;
+}
+
 .pomodoro{
   width:100%;
 }
 
+.time-panel{
+  margin-top: 130px;
+}
+.reset{ 
+  background-color: #111;
+  color: #fff;
+  font-size: 30px;
+}
 .countdown{
- margin:0 auto;
-  left: 50%;
   color: #fff;
   font-size:150px;  
-  width:100%;
+    display: inline-block;
+  width:350px;
+  margin-left: 60px;
+}
+
+.time{
+  color: #fff;
+  font-size:75px;  
+    display: inline-block;
+  width:350px;
 }
 .date{
  margin:0 auto;
