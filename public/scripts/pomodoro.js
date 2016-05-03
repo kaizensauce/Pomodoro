@@ -4,7 +4,7 @@ var globalVar = {};
 var StartStopButton = React.createClass({
     render: function () {
         return (
-            <div><button onClick={this.props.startStopClick} className={this.props.state}></button></div>
+            <button onClick={this.props.startStopClick} className={this.props.state}></button>
         )
     }
 })
@@ -60,7 +60,7 @@ var Main = React.createClass({
         }
         this.update();
     },
-    
+
     tick: function () {
         if (isRunning === 'true') {
             remainingDuration.subtract(500);
@@ -74,13 +74,13 @@ var Main = React.createClass({
         }
         this.update();
     },
-    
+
     update: function () {
         var timeLeftString = Utilities.CreateTimeLeftString(remainingDuration);
         var now = moment();
         var currentTime = now.format('hh:mm:ss');
         var currentDate = now.format('dddd Do MMMM YYYY')
-        this.setState({ countdown: timeLeftString, currentTime:currentTime, currentDate:currentDate});
+        this.setState({ countdown: timeLeftString, currentTime: currentTime, currentDate: currentDate });
     },
     getInitialState: function () {
         var timeLeftString = '25:00';
@@ -101,26 +101,28 @@ var Main = React.createClass({
         remainingDuration = new moment.duration(3, 'minutes');
         this.update();
     },
-        reset25Click: function () {
+    reset25Click: function () {
         remainingDuration = new moment.duration(25, 'minutes');
         this.update();
     },
     render: function () {
         return (
             <div>
-            <div className="pomodoro">
-            <div className='buttons'>
-                    <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
-                    <Reset25Button resetClick={this.reset25Click}/>
-                    <Reset3Button resetClick={this.reset3Click}/>
+                <div className="pomodoro">
+                    <TimeLeft timeLeft={this.state.countdown}/>
+                      <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
+                    <div className='buttons'>
+                      
+                        <Reset25Button resetClick={this.reset25Click}/>
+                        <Reset3Button resetClick={this.reset3Click}/>
+                        
+                    </div>
                 </div>
-                <TimeLeft timeLeft={this.state.countdown}/>
+                <div className="time-panel">
+                    <Time currentTime={this.state.currentTime}></Time>
+                    <Date currentDate={this.state.currentDate}></Date>
+                </div>
             </div>
-            <div className="time-panel">
-               <Time currentTime={this.state.currentTime}></Time>
-               <Date currentDate={this.state.currentDate}></Date>
-            </div>
-            </div>  
         )
     }
 })
@@ -129,7 +131,7 @@ var Main = React.createClass({
 
 
 ReactDOM.render(<Main />, document.getElementById("content"));
-        if (timer === undefined) {
-            timer = setInterval(globalVar.callback, 500);
-        }
+if (timer === undefined) {
+    timer = setInterval(globalVar.callback, 500);
+}
 

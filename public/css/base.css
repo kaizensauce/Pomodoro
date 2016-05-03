@@ -53,16 +53,16 @@ button{
   height:50px;
   width:50px;
 }
-.buttons{
-  display: inline-block;
-}
+
 
 button.running{
-background:url(../media/stop.png) no-repeat;
+  background:url(../media/stop.png) no-repeat;
+  margin-left: 100px;
 }
 
 button.stopped{
-background:url(../media/Go.png) no-repeat;
+  background:url(../media/Go.png) no-repeat;
+  margin-left: 100px;
 }
 
 .pomodoro{
@@ -73,16 +73,17 @@ background:url(../media/Go.png) no-repeat;
   margin-top: 130px;
 }
 .reset{ 
-  background-color: #111;
-  color: #fff;
-  font-size: 30px;
+
+      background-color: #111;
+    color: #fff;
+    margin-right: 100px;
+    font-size: 75px;
 }
 .countdown{
   color: #fff;
   font-size:150px;  
     display: inline-block;
   width:350px;
-  margin-left: 60px;
 }
 
 .time{
