@@ -110,12 +110,12 @@ var Main = React.createClass({
             <div>
                 <div className="pomodoro">
                     <TimeLeft timeLeft={this.state.countdown}/>
-                      <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
+                      
                     <div className='buttons'>
                       
                         <Reset25Button resetClick={this.reset25Click}/>
                         <Reset3Button resetClick={this.reset3Click}/>
-                        
+                        <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
                     </div>
                 </div>
                 <div className="time-panel">
