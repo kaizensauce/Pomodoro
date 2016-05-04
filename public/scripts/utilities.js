@@ -1,4 +1,4 @@
-var Utilities = (function() {
+define(function() {
    function calculateEndTime() {
         var endTime = moment().add(5, 'seconds');
         return endTime;
@@ -23,4 +23,4 @@ var Utilities = (function() {
     GetRemainingDuration : getRemainingDuration,
     CreateTimeLeftString:createTimeLeftString
   }; 
-})();
+});
