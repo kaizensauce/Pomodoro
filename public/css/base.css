@@ -72,7 +72,7 @@ button{
 }
 
 
-button.running{
+button.started{
   background:url(../media/stop.png) no-repeat;
   margin-left: 20px;
 }

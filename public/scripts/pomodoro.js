@@ -1,6 +1,7 @@
 
-define(["utilities", "react", "react-dom", "moment"], function (utilities, React, ReactDOM, moment) {
+define(["utilities", "react", "react-dom", "moment", "services"], function (utilities, React, ReactDOM, moment, services) {
     var Utilities = utilities;
+    var Services = services;
     var globalVar = {};
 
     var StartStopButton = React.createClass({
@@ -49,10 +50,10 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
             return (<div className="countdown"><span className="digits">{this.props.timeLeft}</span></div>)
         }
     })
-    
+
     var TaskSummary = React.createClass({
-        render: function(){
-            return (<div className="tasksummarycontainer">&gt; <input className="taskSummary"></input></div>)
+        render: function () {
+            return (<div className="tasksummarycontainer">&gt; <input className="taskSummary" onChange={this.props.onChange}></input></div>)
         }
     }
     )
@@ -69,7 +70,9 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
             }
             this.update();
         },
-
+        onChange: function (e) {
+            this.setState({ task: e.target.value });
+        },
         tick: function () {
             if (isRunning === 'true') {
                 remainingDuration.subtract(500);
@@ -79,6 +82,14 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
                     isRunning = 'false';
                     this.setState({ state: 'stopped' });
                     clearInterval(timer);
+                    services.SaveStatusUpdate(
+                        {
+                            date: moment().format('DD/MM/YYYY'),
+                            time: moment().format('hh:mm:ss'),
+                            taskSummary: this.state.task,
+                            state: "Complete",
+                            remainingDuration: this.state.countdown
+                        });
                 }
             }
             this.update();
@@ -98,16 +109,31 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
             return { countdown: timeLeftString, state: 'stopped', currentTime: currentTime };
         },
         startStopClick: function () {
+            var now = moment();
+            var stateChange = undefined;
+
             if (isRunning === 'true') {
+                stateChange = "Stopped";
                 isRunning = 'false';
                 this.setState({ state: 'stopped' });
             } else {
                 isRunning = 'true';
-                this.setState({ state: 'running' });
+                stateChange = "Started";
+
+                this.setState({ state: 'started' });
             }
+
+            services.SaveStatusUpdate(
+                {
+                    date: now.format('DD/MM/YYYY'),
+                    time: now.format('hh:mm:ss'),
+                    taskSummary: this.state.task,
+                    state: stateChange,
+                    remainingDuration: this.state.countdown
+                });
         },
         reset3Click: function () {
-            remainingDuration = new moment.duration(3, 'minutes');
+            remainingDuration = new moment.duration(3, 'seconds');
             this.update();
         },
         reset25Click: function () {
@@ -126,7 +152,7 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
                             <Reset3Button resetClick={this.reset3Click}/>
                             <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
                         </div>
-                        <TaskSummary/>
+                        <TaskSummary onChange={this.onChange}/>
                     </div>
                     <div className="time-panel">
                         <Time currentTime={this.state.currentTime}></Time>
