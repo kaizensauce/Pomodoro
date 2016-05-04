@@ -49,6 +49,13 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
             return (<div className="countdown"><span className="digits">{this.props.timeLeft}</span></div>)
         }
     })
+    
+    var TaskSummary = React.createClass({
+        render: function(){
+            return (<div className="tasksummarycontainer">&gt; <input className="taskSummary"></input></div>)
+        }
+    }
+    )
 
     var remainingDuration = undefined;
     var isRunning = 'false';
@@ -119,6 +126,7 @@ define(["utilities", "react", "react-dom", "moment"], function (utilities, React
                             <Reset3Button resetClick={this.reset3Click}/>
                             <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
                         </div>
+                        <TaskSummary/>
                     </div>
                     <div className="time-panel">
                         <Time currentTime={this.state.currentTime}></Time>
