@@ -5,7 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.4.3",
-    "express": "^4.4.5"
+    "express": "^4.4.5",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2"
   },
   "devDependencies": {},
   "scripts": {
@@ -27,7 +29,7 @@
     "url": "https://github.com/kaizensauce/Pomodoro/issues"
   },
   "homepage": "https://github.com/kaizensauce/Pomodoro",
-  "engines" : {
-    "node" : "0.12.x"
+  "engines": {
+    "node": "0.12.x"
   }
 }
