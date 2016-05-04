@@ -1,56 +1,11 @@
 
-define(["utilities", "react", "react-dom", "moment", "services"], function (utilities, React, ReactDOM, moment, services) {
+define(["utilities", "react", "react-dom", "moment", "services", "jsx!/scripts/button", "jsx!/scripts/text"], function (utilities, React, ReactDOM, moment, services, button, text) {
     var Utilities = utilities;
     var Services = services;
+    var Button = button;
+    var Text = text;
     var globalVar = {};
-
-    var StartStopButton = React.createClass({
-        render: function () {
-            return (
-                <button onClick={this.props.startStopClick} className={this.props.state}></button>
-            )
-        }
-    })
-
-    var Reset25Button = React.createClass({
-        render: function () {
-            return (
-                <button className="reset" onClick={this.props.resetClick}>25</button>
-            )
-        }
-    })
-
-    var Reset3Button = React.createClass({
-        render: function () {
-            return (
-                <button className="reset" onClick={this.props.resetClick}>3</button>
-            )
-        }
-    })
-
-    var Time = React.createClass({
-        render: function () {
-            return (
-                <div className="time">{this.props.currentTime}</div>
-            )
-        }
-    })
-
-    var Date = React.createClass({
-        render: function () {
-            return (
-                <div className="date">{this.props.currentDate}</div>
-            )
-        }
-    })
-
-
-    var TimeLeft = React.createClass({
-        render: function () {
-            return (<div className="countdown"><span className="digits">{this.props.timeLeft}</span></div>)
-        }
-    })
-
+  
     var TaskSummary = React.createClass({
         render: function () {
             return (<div className="tasksummarycontainer">&gt; <input className="taskSummary" onChange={this.props.onChange}></input></div>)
@@ -133,7 +88,7 @@ define(["utilities", "react", "react-dom", "moment", "services"], function (util
                 });
         },
         reset3Click: function () {
-            remainingDuration = new moment.duration(3, 'seconds');
+            remainingDuration = new moment.duration(3, 'minutes');
             this.update();
         },
         reset25Click: function () {
@@ -144,27 +99,22 @@ define(["utilities", "react", "react-dom", "moment", "services"], function (util
             return (
                 <div>
                     <div className="pomodoro">
-                        <TimeLeft timeLeft={this.state.countdown}/>
-
+                        <Text className="countdown" value={this.state.countdown}/>
                         <div className='buttons'>
-
-                            <Reset25Button resetClick={this.reset25Click}/>
-                            <Reset3Button resetClick={this.reset3Click}/>
-                            <StartStopButton startStopClick={this.startStopClick} state={this.state.state}/>
+                            <Button onClick={this.reset25Click} className="reset" label='25'/>
+                            <Button onClick={this.reset3Click} className="reset" label='3'/>
+                            <Button onClick={this.startStopClick} className={this.state.state}/>
                         </div>
                         <TaskSummary onChange={this.onChange}/>
                     </div>
                     <div className="time-panel">
-                        <Time currentTime={this.state.currentTime}></Time>
-                        <Date currentDate={this.state.currentDate}></Date>
+                        <Text className="time" value={this.state.currentTime}></Text>
+                        <Text className="date" value={this.state.currentDate}></Text>
                     </div>
                 </div>
             )
         }
     })
-
-
-
 
     ReactDOM.render(<Main />, document.getElementById("content"));
     if (timer === undefined) {
